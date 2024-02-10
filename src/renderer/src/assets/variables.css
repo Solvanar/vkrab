@@ -1,0 +1,13 @@
+:root {
+  --button-sm-size: 24px;
+  --button-md-size: 32px;
+  --button-lg-size: 64px;
+
+  --button-radius: 64px;
+  --button-font-weight: 600;
+
+  --color-white: #f9f9f9;  /*rgba(255, 255, 255, 0.87) ?*/
+  --color-black: #242424;
+  --color-red: #ff715b;
+  --color-blue: #5659c7;
+}
