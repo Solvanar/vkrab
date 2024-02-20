@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { SETTINGS } from '../tokensData';
 
 export default async function request(
   method: string,
@@ -6,16 +7,16 @@ export default async function request(
 ): Promise<Error | any> {
   let error: Error = new Error();
   const response = await axios.post(
-    `https://api.vk.com/method/${method}`, //messages.getHistory
+    `https://api.vk.com/method/${method}`,
     new URLSearchParams({
-      'v': '5.131',
-      'access_token': 'test',
-      'user_id': 'test',
+      'v': SETTINGS.apiVersion,
+      'access_token': SETTINGS.token,
+      'user_id': SETTINGS.userId,
       ...params,
     }),
     {
       headers: {
-        'User-Agent': 'test'
+        'User-Agent': SETTINGS.userAgent
       }
     }
   ).catch((err: Error) => {
