@@ -1,8 +1,13 @@
 <template>
-  <div :class="$style.nav">
-    <BaseButton v-if="route.name !== 'root'" :size="'lg'" :is-rounded="true" :href="'/'" type="'link'">
-      <-
-    </BaseButton>
+  <div :class="[$style.nav, $style.top]">
+    <slot name="top"></slot>
+  </div>
+  <div :class="[$style.nav, $style.bottom]">
+    <slot name="bottom">
+      <BaseButton v-if="route.name !== 'root'" :size="'lg'" :is-rounded="true" :href="'/'" type="'link'">
+        <-
+      </BaseButton>
+    </slot>
   </div>
 </template>
 
@@ -17,7 +22,15 @@ const route: RouteLocationNormalizedLoaded = useRoute();
 <style module>
 .nav {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+
+  &.top {
+     top: 20px;
+     right: 20px;
+  }
+
+  &.bottom {
+     bottom: 20px;
+     right: 20px;
+  }
 }
 </style>

@@ -1,31 +1,107 @@
 <template>
+  <div
+    v-if="areSettingsFilled"
+    :class="$style['top-navigation']"
+  >
+    <BaseButton @click="areSettingsFilled = false">
+      Я хочу сменить токен
+    </BaseButton>
+  </div>
+
   <div :class="$style.container">
-    <BaseButton @click="run">Grab chat</BaseButton>
+    <div v-if="!areSettingsFilled">
+      <BaseButton @click="areSettingsFilled = true">Потом</BaseButton>
+      <p>Для доступа к чатам надо указать токен (потом будет описано, как получить) и ID пользователя</p>
+      <AuthSettings @update-settings="fillSettings" />
+    </div>
+    <div v-else>
+      <BaseButton v-if="!chats.length" @click="run">Grab convs</BaseButton>
+      <div
+        v-else
+        :class="$style['chat-list']"
+      >
+        <div v-for="chat in chats" :class="$style['chat-item']">
+          <img :src="chat.chatSettings?.photo?.photo_50" />
+          <span>{{chat.chatSettings?.title || chat.peer?.id}}</span>
+        </div>
+
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-const ipcRenderer = window.electron.ipcRenderer;
-import BaseButton from '@components/Base/BaseButton.vue';
+import { ref } from 'vue';
 
-ipcRenderer.on('submit', (event, data) => {
-  console.log('received event', event)
-  console.log('received data', data)
-})
+const ipcRenderer = window.electron.ipcRenderer;
+import AuthSettings from '@components/Grabber/AuthSettings.vue';
+import BaseButton from '@components/Base/BaseButton.vue';
+import { Conversation } from '@definitions/messages';
+
+const getSettings = () => ({
+  token: localStorage.getItem('token'),
+  userId: localStorage.getItem('userId'),
+});
+
+let settings = getSettings();
+let chats = ref<Conversation[]>([]);
+
+if (settings.token && settings.userId) {
+  ipcRenderer.send('saveSettings', settings);
+}
+
+const areSettingsFilled = ref<boolean>(!!settings?.token && !!settings?.userId);
+
+const fillSettings = () => {
+  settings = getSettings();
+
+  areSettingsFilled.value = true;
+}
 
 const run = async () => {
-  ipcRenderer.send('grab', 333859541)
+  ipcRenderer.send('getData', { method: 'getConversations' });
 };
 
+ipcRenderer.on('returnData', (event, arg) => {
+  chats.value = arg;
+  console.log(arg)
+})
 </script>
 
 <style module>
 .container {
   display: flex;
-  width: 500px;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
   margin: auto;
-  top: 200px;
   position: relative;
+  align-items: center;
   justify-content: center;
+}
+
+.top-navigation {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.chat-list {
+  height: 200px;
+  overflow-y: scroll;
+
+  .chat-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    span {
+      margin-left: 10px;
+    }
+
+    img {
+      border-radius: 50px;
+    }
+  }
 }
 </style>

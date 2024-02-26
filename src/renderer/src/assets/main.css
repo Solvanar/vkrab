@@ -5,7 +5,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color: var(--color-white);
+  color: var(--color-black);
   background-color: var(--color-white);
 
   font-synthesis: none;
@@ -14,7 +14,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
+html,
+body,
+#app {
+  width: max(100%, 100vw);
+  height: max(100%, 100vh);
   padding: 0;
   margin: 0;
+  overflow: hidden;
 }

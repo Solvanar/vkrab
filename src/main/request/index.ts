@@ -1,7 +1,10 @@
-import getChat from './messages/getChat';
+import { getChat as chat } from './messages/getChat';
+import { getConversations as conversations } from './messages/getConversations';
+import { Conversation } from '@definitions/messages';
 
-export const grab = async (chatId: string) => {
-  const chatInfo = await getChat(chatId);
-  console.log('chatInfo', chatInfo);
-  return chatInfo;
+export const getConversations = (): Promise<Conversation[] | Error> => {
+  return conversations();
+}
+export const grabChat = async (chatId: string) => {
+  return await chat(chatId);
 }

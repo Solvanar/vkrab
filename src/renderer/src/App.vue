@@ -3,10 +3,6 @@ import BaseNav from './components/Base/BaseNav.vue'
 </script>
 
 <template>
-  <div>
-    <BaseNav />
-  </div>
-  <div>
-    <router-view />
-  </div>
+  <BaseNav />
+  <router-view />
 </template>

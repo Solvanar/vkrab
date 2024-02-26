@@ -1,7 +1,7 @@
 import request from '../request';
 
-export default function getChat(id: string) {
-  return request('messages.getHistory', {
+export const getChat = async (id: string) => {
+  return await request('messages.getChat', {
     chat_id: id,
   });
 }
