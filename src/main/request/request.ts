@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { SETTINGS } from './tokensData';
 
+// TODO: починить any
 export default async function request(
   method: string,
   params: object,

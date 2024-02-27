@@ -3,7 +3,7 @@
     <input
       :class="className"
       :name="title"
-      :model-value="modelValue"
+      :value="modelValue"
       @input="(event) => $emit('update:modelValue', event.target.value)"
     />
     <label :for="title">{{title}}</label>

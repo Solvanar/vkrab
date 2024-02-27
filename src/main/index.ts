@@ -48,6 +48,7 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
+  // TODO: починить any после решения вопросов со структурой запросов
   ipcMain.on('saveSettings', async (event, params: any) => {
     SETTINGS.token = params.token;
     SETTINGS.userId = params.userId;

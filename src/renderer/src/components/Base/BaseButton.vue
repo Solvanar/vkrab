@@ -6,7 +6,7 @@
       {[$style.rounded]: props.isRounded},
       $style[`size-${props.size}`],
     ]"
-    @click="handler"
+    @click="(event: Event) => emit('click', event)"
   >
     <span :class="$style.content">
         <slot />
@@ -42,13 +42,10 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
   isRounded: false,
 });
-
-const handler = (event: any): void => {
-  emit('click', event);
-};
 </script>
 
 <style module>
+/* TODO: подрезать где-нибудь дизайн для UI?.. */
 .button {
   align-items: center;
   justify-content: center;
