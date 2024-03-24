@@ -1,13 +1,19 @@
 <template>
-  <div :class=$style.container>
-    <div :class="$style['section-a']" @click="goToSection('grabber')">
-      <div :class="$style['menu-item']">
-        <div :class="[$style.title, $style.left]">Grab</div>
+  <div>
+    <div
+      :class="{
+        [$style.sectionA]: true,
+        [$style.hideBlockAnimation]: isGrab
+      }"
+      @click="goToSection('viewer')"
+    >
+      <div :class="[$style.sectionAContent, $style.menuItem, $style.outfitFont]">
+        View
       </div>
     </div>
-    <div :class="$style['section-b']"  @click="goToSection('viewer')">
-      <div :class="$style['menu-item']">
-        <div :class="[$style.title, $style.right]">Show</div>
+    <div :class="$style.sectionB"  @click="goToSection('grabber')">
+      <div :class="{[$style.menuItem]: true, [$style.outfitFont]: true, [$style.hideTitleAnimation]: isGrab}">
+        Grab
       </div>
     </div>
   </div>
@@ -16,50 +22,97 @@
 <script lang="ts" setup>
 import { useRouter } from 'vue-router';
 import type { Router } from 'vue-router';
+import { ref, type Ref } from 'vue';
 
 const router: Router = useRouter();
 
-const goToSection = (section: string) => {
-  router.push(router.resolve(section));
+const isGrab: Ref<boolean> = ref<boolean>(false);
+
+const goToSection = (section: string): void => {
+  isGrab.value = section === 'grabber';
+  setTimeout(() => {
+    console.log('route change')
+    router.push(router.resolve(section));
+  }, 500);
 }
 </script>
 
 <style module>
-.container {
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--color-blue);
-  color: var(--color-white);
-  display: flex;
-  /* #646cff;*/
 
-  .section-a {
-    width: calc(50% - 100px);
-    height: 0;
-    border-bottom: 100vh solid var(--color-red);
-    border-left: 0 solid transparent;
-    border-right: 200px solid transparent;
-    /*background: linear-gradient(to top left, transparent 0%, transparent 50%, #FF715B 50%, #FF715B 60%);*/
-    text-align: left;
-  }
-
-  .section-b {
-    width: 50%;
-    height: 100%;
-    text-align: right;
-  }
-
-  .title {
-    font-size: 40px;
+  .sectionA {
     position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: top right;
+    transform: skew(-20deg);
+
+    width: 60%;
+    height: 100%;
+    text-align: left;
+    /* todo цвета в конфиг */
+    background: linear-gradient( 203deg, #fc6062 0%, #1c0053 60%, #1c0053 100% );
+    z-index: 1;
+    box-shadow: 10px 0 20px #000;
+    color: #8a4fff;
+    cursor: pointer;
   }
-  .right {
-    right: 20px;
-    top: 50%;
+
+  .sectionAContent {
+    transform: skew(20deg);
   }
-  .left {
-    left: 20px;
-    top: 50%;
+
+  .sectionB {
+    width: 50%;
+    right: 0;
+    position: absolute;
+    height: 100%;
+    z-index: 1;
+    color: #fc6062;
+    cursor: pointer;
   }
+
+  .menuItem {
+    position: relative;
+    font-size: 72px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow:
+      3px 3px 0 #000,
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;
+  }
+
+
+.outfitFont {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.hideBlockAnimation {
+  animation-name: hideBlockAnimation;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+.hideTitleAnimation {
+  animation-name: hideTitleAnimation;
+  animation-delay: 0.2s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes hideBlockAnimation {
+  0%   { left: 0; }
+  100% { left: -2000px; }
+}
+
+@keyframes hideTitleAnimation {
+  0%   { top: 0; }
+  100% { top: -1000px; }
 }
 </style>

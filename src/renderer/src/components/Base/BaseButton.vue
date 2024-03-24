@@ -45,7 +45,6 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <style module>
-/* TODO: подрезать где-нибудь дизайн для UI?.. */
 .button {
   align-items: center;
   justify-content: center;
