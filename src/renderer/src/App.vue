@@ -12,15 +12,15 @@ import BaseNav from './components/Base/BaseNav.vue'
 
 <style module>
 .container {
-  background: linear-gradient(175deg, #fc6062, rgb(255 100 100 / 0) 100%),
-  linear-gradient(234deg, #1c0053, rgb(255 100 100 / 0) 100%),
-  linear-gradient(340deg, #1c0053, rgb(100 255 100 / 0) 100%);
+  background: linear-gradient(175deg, var(--color-red), rgb(255 100 100 / 0) 100%),
+  linear-gradient(234deg, var(--color-blue), rgb(255 100 100 / 0) 100%),
+  linear-gradient(340deg, var(--color-blue), rgb(100 255 100 / 0) 100%);
   display: flex;
   height: 100vh;
   width: 100vw;
 
   .halftone {
-    --bgColor: #fff;
+    --bgColor: #ffffff;
     --invert: 1;
 
     aspect-ratio: 1;

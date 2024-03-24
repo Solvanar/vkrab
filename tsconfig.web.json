@@ -12,7 +12,8 @@
     "paths": {
       "@renderer/*": ["src/renderer/src/*"],
       "@components/*": ["src/renderer/src/components/*"],
-      "@assets/*": ["src/renderer/src/assets/*"]
+      "@assets/*": ["src/renderer/src/assets/*"],
+      "@definitions/*": ["src/definitions/*"],
     },
     "noUnusedLocals": false
   }

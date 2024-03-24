@@ -50,10 +50,10 @@ const goToSection = (section: string): void => {
     height: 100%;
     text-align: left;
     /* todo цвета в конфиг */
-    background: linear-gradient( 203deg, #fc6062 0%, #1c0053 60%, #1c0053 100% );
+    background: linear-gradient( 203deg, var(--color-red) 0%, var(--color-blue) 60% );
     z-index: 1;
-    box-shadow: 10px 0 20px #000;
-    color: #8a4fff;
+    box-shadow: 10px 0 20px #000000;
+    color: var(--color-violet);
     cursor: pointer;
   }
 
@@ -67,7 +67,7 @@ const goToSection = (section: string): void => {
     position: absolute;
     height: 100%;
     z-index: 1;
-    color: #fc6062;
+    color: var(--color-red);
     cursor: pointer;
   }
 

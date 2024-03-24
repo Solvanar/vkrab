@@ -43,19 +43,21 @@ const className = computed(() => ({
 
   input {
     width: 100%;
+    box-sizing: border-box;
+    color: var(--color-white);
     padding: var(--padding);
     outline: none;
     border-radius: 10px;
     transition: all 0.5s;
     border: 2px solid transparent;
+    background-color: var(--color-dark-gray);
   }
 
   input:hover,
   input:focus,
   input.filled {
     border: 2px solid var(--color-blue);
-    box-shadow: 0 0 0 7px rgb(89, 89, 199, 10%);
-    background-color: var(--color-white);
+    background-color: var(--color-dark-gray);
   }
 
   label {
@@ -74,8 +76,7 @@ const className = computed(() => ({
     padding: 0 0.4em 0 0.4em;
     margin-top: calc(0em - var(--padding) - 8px);
     margin-left: 0.5em;
-    color: var(--color-blue);
-    text-shadow: 2px 0 2px #fff, -2px 0 2px #fff;
+    color: var(--color-gray);
     font-size: 90%;
   }
 }

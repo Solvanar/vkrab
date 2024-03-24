@@ -2,9 +2,9 @@ import request from '../request';
 import { Conversation } from '@definitions/messages';
 
 //TODO: сделать общий интерфейс для error-ов
-export const getConversations = async (): Promise<Conversation[] | Error> => {
+export const getConversations = async (): Promise<Conversation[] | unknown> => {
   const conversations = await request('messages.getConversations', {});
-  let result: Conversation[] | Error;
+  let result: Conversation[] | unknown;
 
   try {
     // TODO: сделать общую структуру для ответов с чатами
@@ -12,7 +12,7 @@ export const getConversations = async (): Promise<Conversation[] | Error> => {
       chatSettings: item.conversation?.chat_settings,
       peer: item.conversation?.peer,
     }));
-  } catch(error) {
+  } catch(error: unknown) {
     result = error
   }
 

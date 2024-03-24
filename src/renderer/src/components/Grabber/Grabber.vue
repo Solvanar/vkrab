@@ -17,7 +17,8 @@
 
 
       <div v-if="!areSettingsFilled">
-        <BaseButton @click="areSettingsFilled = true">Потом</BaseButton>
+        <h2>Настройки подключения</h2>
+        <BaseButton @click="areSettingsFilled = true"><BaseIcon :name="'cross'" /></BaseButton>
         <p>Для доступа к чатам надо указать токен (потом будет описано, как получить) и ID пользователя</p>
         <AuthSettings @update-settings="fillSettings" />
       </div>
@@ -44,6 +45,7 @@ import { ref } from 'vue';
 const ipcRenderer = window.electron.ipcRenderer;
 import AuthSettings from '@components/Grabber/AuthSettings.vue';
 import BaseButton from '@components/Base/BaseButton.vue';
+import BaseIcon from '@components/Base/BaseIcon.vue';
 import { Conversation } from '@definitions/messages';
 
 const getSettings = () => ({
@@ -78,14 +80,14 @@ ipcRenderer.on('returnData', (event, arg) => {
 
 <style module>
 .container {
-  display: flex;
-  flex-direction: column;
+  border: 1px solid var(--color-red);
   width: 100%;
+  height: fit-content;
   position: relative;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0 0 0 / .9);
+  overflow: auto;
+  background-color: rgba(0 0 0 / 0.9);
   margin: 50px;
+  padding: 20px;
   border-radius: 30px;
 }
 
