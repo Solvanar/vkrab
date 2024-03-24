@@ -1,33 +1,41 @@
 <template>
-  <div
-    v-if="areSettingsFilled"
-    :class="$style['top-navigation']"
+  <Transition
+    name="fade"
+    :enter-from-class="$style['slide-down-fade-enter-from']"
+    :enter-active-class="$style['slide-down-fade-enter-active']"
+    appear
   >
-    <BaseButton @click="areSettingsFilled = false">
-      Я хочу сменить токен
-    </BaseButton>
-  </div>
-
-  <div :class="$style.container">
-    <div v-if="!areSettingsFilled">
-      <BaseButton @click="areSettingsFilled = true">Потом</BaseButton>
-      <p>Для доступа к чатам надо указать токен (потом будет описано, как получить) и ID пользователя</p>
-      <AuthSettings @update-settings="fillSettings" />
-    </div>
-    <div v-else>
-      <BaseButton v-if="!chats.length" @click="run">Grab convs</BaseButton>
+    <div :class="$style.container">
       <div
-        v-else
-        :class="$style['chat-list']"
+        v-if="areSettingsFilled"
+        :class="$style['top-navigation']"
       >
-        <div v-for="chat in chats" :class="$style['chat-item']">
-          <img :src="chat.chatSettings?.photo?.photo_50" />
-          <span>{{chat.chatSettings?.title || chat.peer?.id}}</span>
-        </div>
+        <BaseButton @click="areSettingsFilled = false">
+          Я хочу сменить токен
+        </BaseButton>
+      </div>
 
+
+      <div v-if="!areSettingsFilled">
+        <BaseButton @click="areSettingsFilled = true">Потом</BaseButton>
+        <p>Для доступа к чатам надо указать токен (потом будет описано, как получить) и ID пользователя</p>
+        <AuthSettings @update-settings="fillSettings" />
+      </div>
+      <div v-else>
+        <BaseButton v-if="!chats.length" @click="run">Grab convs</BaseButton>
+        <div
+          v-else
+          :class="$style['chat-list']"
+        >
+          <div v-for="chat in chats" :class="$style['chat-item']">
+            <img :src="chat.chatSettings?.photo?.photo_50" />
+            <span>{{chat.chatSettings?.title || chat.peer?.id}}</span>
+          </div>
+
+        </div>
       </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <script lang="ts" setup>
@@ -73,11 +81,12 @@ ipcRenderer.on('returnData', (event, arg) => {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
-  margin: auto;
   position: relative;
   align-items: center;
   justify-content: center;
+  background-color: rgba(0 0 0 / .9);
+  margin: 50px;
+  border-radius: 30px;
 }
 
 .top-navigation {
@@ -104,5 +113,14 @@ ipcRenderer.on('returnData', (event, arg) => {
       border-radius: 50px;
     }
   }
+}
+
+.slide-down-fade-enter-from {
+  opacity: 0;
+  transform: translateY(-30px)
+}
+
+.slide-down-fade-enter-active {
+  transition: all 500ms ease
 }
 </style>
